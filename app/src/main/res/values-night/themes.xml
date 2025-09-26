@@ -9,9 +9,22 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Status bar configuration -->
+        <item name="android:statusBarColor">#6200EE</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Ensure status bar is never hidden -->
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <!-- Popup menu style -->
+        <item name="popupMenuStyle">@style/WhitePopupMenu</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="WhitePopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/popup_menu_background</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:dropDownVerticalOffset">4dp</item>
+        <item name="android:dropDownHorizontalOffset">0dp</item>
     </style>
 
     <style name="recipeai">

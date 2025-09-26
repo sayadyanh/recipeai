@@ -1,0 +1,1 @@
+/Users/haykazsayadyan/code/RecipeAI/app/src/main/cpp/CMakeLists.txt

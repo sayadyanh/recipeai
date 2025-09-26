@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "/Users/haykazsayadyan/code/RecipeAI/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/haykazsayadyan/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/haykazsayadyan/code/RecipeAI/app/.cxx/Debug/6v3j12q2/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/haykazsayadyan/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/haykazsayadyan/code/RecipeAI/app/.cxx/Debug/6v3j12q2/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "recipeai::@6890427a1f51a3e7e1df": {
+      "artifactName": "recipeai",
+      "abi": "x86",
+      "output": "/Users/haykazsayadyan/code/RecipeAI/app/build/intermediates/cxx/Debug/6v3j12q2/obj/x86/librecipeai.so",
+      "runtimeFiles": []
+    }
+  }
+}

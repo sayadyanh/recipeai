@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -44,10 +45,39 @@ class MainActivity : AppCompatActivity() {
         menuIcon.setOnClickListener { view ->
             val popupMenu = PopupMenu(this, view)
             popupMenu.menuInflater.inflate(R.menu.profile_menu, popupMenu.menu)
+
+            // Force icons to show
+            try {
+                val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+                fieldMPopup.isAccessible = true
+                val mPopup = fieldMPopup.get(popupMenu)
+                mPopup.javaClass
+                    .getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                    .invoke(mPopup, true)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.menu_profile -> {
-                        // Handle profile settings
+                        startActivity(Intent(this, ProfileActivity::class.java))
+                        true
+                    }
+                    R.id.menu_settings -> {
+                        startActivity(Intent(this, SettingsActivity::class.java))
+                        true
+                    }
+                    R.id.menu_favorites -> {
+                        startActivity(Intent(this, FavoritesActivity::class.java))
+                        true
+                    }
+                    R.id.menu_preferences -> {
+                        startActivity(Intent(this, PreferencesActivity::class.java))
+                        true
+                    }
+                    R.id.menu_support -> {
+                        startActivity(Intent(this, SupportActivity::class.java))
                         true
                     }
                     R.id.menu_logout -> {

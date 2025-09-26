@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
     <!-- Welcome Screen (visible initially) -->
@@ -79,7 +80,7 @@
                 android:focusable="true"
                 android:padding="8dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_avatar_placeholder"
+                android:src="@drawable/ic_user"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
