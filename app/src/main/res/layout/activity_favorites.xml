@@ -9,21 +9,37 @@
     <!-- Header -->
     <ImageView
         android:id="@+id/iv_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="48dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:contentDescription="Back"
         android:focusable="true"
+        android:padding="4dp"
         android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Toggle View Button -->
+    <ImageView
+        android:id="@+id/iv_toggle_view"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="48dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="Switch to list view"
+        android:focusable="true"
+        android:padding="4dp"
+        android:src="@drawable/ic_list"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:text="Favorites"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -31,21 +47,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintEnd_toStartOf="@id/iv_toggle_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_back" />
-
-    <!-- Toggle View Button -->
-    <ImageView
-        android:id="@+id/iv_toggle_view"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:contentDescription="Switch to list view"
-        android:focusable="true"
-        android:src="@drawable/ic_list"
-        app:layout_constraintBottom_toBottomOf="@id/iv_back"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_back"
         app:layout_constraintTop_toTopOf="@id/iv_back" />
 
     <!-- Calendar View -->
@@ -53,7 +55,17 @@
         android:id="@+id/calendar_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:dateTextAppearance="@style/CalendarDateTextAppearance"
+        android:focusedMonthDateColor="@color/black"
+        android:selectedWeekBackgroundColor="#E3F2FD"
+        android:showWeekNumber="false"
+        android:theme="@style/CustomCalendarTheme"
+        android:unfocusedMonthDateColor="#666666"
+        android:weekDayTextAppearance="@style/CalendarWeekDayTextAppearance"
+        android:weekSeparatorLineColor="#E0E0E0"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -94,14 +94,75 @@
             android:layout_weight="1"
             android:fillViewport="true">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="32dp"
-                android:text="Welcome to RecipeAI!\n\nThis is where your main app content will go."
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Loading Indicator -->
+                <ProgressBar
+                    android:id="@+id/pb_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="64dp"
+                    android:visibility="visible" />
+
+                <!-- Recipe Content -->
+                <LinearLayout
+                    android:id="@+id/ll_recipe_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Recipe Image -->
+                    <ImageView
+                        android:id="@+id/iv_recipe_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/cr8beeeeee"
+                        android:scaleType="centerCrop" />
+
+                    <!-- Recipe Title -->
+                    <TextView
+                        android:id="@+id/tv_recipe_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Recipe Title"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <!-- Recipe Description -->
+                    <TextView
+                        android:id="@+id/tv_recipe_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Recipe instructions will appear here..."
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!-- Error State -->
+                <TextView
+                    android:id="@+id/tv_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:gravity="center"
+                    android:text="Failed to load recipe. Please check your internet connection."
+                    android:textColor="#FF6B6B"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
         </ScrollView>
 
