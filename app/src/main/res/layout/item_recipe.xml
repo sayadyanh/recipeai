@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/cr8beeeeee"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="16dp">
+
+    <!-- Recipe Image -->
+    <ImageView
+        android:id="@+id/iv_recipe_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/cr8b000000"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Recipe Name -->
+    <TextView
+        android:id="@+id/tv_recipe_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Recipe Name"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_recipe_image"
+        app:layout_constraintTop_toTopOf="@id/iv_recipe_image" />
+
+    <!-- Recipe Description -->
+    <TextView
+        android:id="@+id/tv_recipe_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="Recipe description with ellipsis..."
+        android:textColor="#666666"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_recipe_image"
+        app:layout_constraintTop_toBottomOf="@id/tv_recipe_name" />
+
+    <!-- Recipe Info Row -->
+    <LinearLayout
+        android:id="@+id/ll_recipe_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_recipe_image"
+        app:layout_constraintTop_toBottomOf="@id/tv_recipe_description">
+
+        <TextView
+            android:id="@+id/tv_cooking_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="4dp"
+            android:text="20 min"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_clock" />
+
+        <TextView
+            android:id="@+id/tv_servings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="4dp"
+            android:text="4 people"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_people" />
+
+        <TextView
+            android:id="@+id/tv_difficulty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="4dp"
+            android:text="Easy"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_difficulty" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

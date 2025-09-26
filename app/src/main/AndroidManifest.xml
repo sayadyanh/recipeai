@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -52,6 +55,11 @@
 
         <activity
             android:name=".PreferencesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.RecipeAI" />
+
+        <activity
+            android:name=".CameraActivity"
             android:exported="false"
             android:theme="@style/Theme.RecipeAI" />
 

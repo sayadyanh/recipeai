@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.net.URL
 import kotlin.concurrent.thread
 
@@ -47,6 +48,13 @@ class MainActivity : AppCompatActivity() {
 
         // Load recipe data from API
         loadRecipeData()
+
+        // Setup floating camera button
+        val cameraFab = findViewById<FloatingActionButton>(R.id.fab_camera)
+        cameraFab.setOnClickListener {
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
+        }
 
         // Setup menu dropdown
         menuIcon.setOnClickListener { view ->
