@@ -37,19 +37,71 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_back" />
 
-    <!-- Recipe Image -->
-    <ImageView
-        android:id="@+id/iv_recipe_image"
+    <!-- Recipe Image Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_image_container"
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/cr8beeeeee"
-        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_back" />
+        app:layout_constraintTop_toBottomOf="@id/iv_back">
+
+        <!-- Recipe Image -->
+        <ImageView
+            android:id="@+id/iv_recipe_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/cr8beeeeee"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Action Icons Container -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Heart/Favorite Icon -->
+            <ImageView
+                android:id="@+id/iv_favorite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/cr8bffffff"
+                android:clickable="true"
+                android:contentDescription="Add to favorites"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/ic_favorite"
+                android:tint="#999999" />
+
+            <!-- Share Icon -->
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/cr8bffffff"
+                android:clickable="true"
+                android:contentDescription="Share recipe"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/ic_share"
+                android:tint="#999999" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Content Container -->
     <ScrollView
@@ -58,7 +110,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_recipe_image">
+        app:layout_constraintTop_toBottomOf="@id/cl_image_container">
 
         <LinearLayout
             android:layout_width="match_parent"

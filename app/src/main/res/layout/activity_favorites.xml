@@ -54,9 +54,8 @@
     <CalendarView
         android:id="@+id/calendar_view"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="24dp"
         android:background="@color/white"
         android:dateTextAppearance="@style/CalendarDateTextAppearance"
         android:focusedMonthDateColor="@color/black"
@@ -67,10 +66,48 @@
         android:weekDayTextAppearance="@style/CalendarWeekDayTextAppearance"
         android:weekSeparatorLineColor="#E0E0E0"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#E0E0E0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calendar_view" />
+
+    <!-- Selected Date Title -->
+    <TextView
+        android:id="@+id/tv_selected_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Today's Favorites"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <!-- Selected Date Recipes -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_selected_date_recipes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_selected_date" />
 
     <!-- Empty State Text -->
     <TextView

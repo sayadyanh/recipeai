@@ -1,49 +1,89 @@
 package com.homeapps.recipeai
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.CalendarView
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.homeapps.recipeai.adapters.RecipeAdapter
+import com.homeapps.recipeai.database.FavoritesDbHelper
+import com.homeapps.recipeai.models.Recipe
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FavoritesActivity : AppCompatActivity() {
 
     private lateinit var calendarView: CalendarView
-    private lateinit var listContainer: LinearLayout
+    private lateinit var selectedDateRecyclerView: RecyclerView
     private lateinit var toggleButton: ImageView
+    private lateinit var selectedDateTitle: TextView
     private lateinit var emptyStateText: TextView
-    private val favorites = mutableListOf<String>()
+
+    private lateinit var favoritesDbHelper: FavoritesDbHelper
+    private lateinit var selectedDateAdapter: RecipeAdapter
+    private lateinit var allFavoritesAdapter: RecipeAdapter
+
     private var isCalendarView = true
+    private var selectedDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
 
-        val backButton = findViewById<ImageView>(R.id.iv_back)
+        favoritesDbHelper = FavoritesDbHelper(this)
+        selectedDate = getCurrentDate()
+
+        initViews()
+        setupAdapters()
+        setupListeners()
+        updateView()
+    }
+
+    private fun initViews() {
         calendarView = findViewById(R.id.calendar_view)
-        listContainer = findViewById(R.id.ll_favorites_container)
+        selectedDateRecyclerView = findViewById(R.id.rv_selected_date_recipes)
         toggleButton = findViewById(R.id.iv_toggle_view)
+        selectedDateTitle = findViewById(R.id.tv_selected_date)
         emptyStateText = findViewById(R.id.tv_empty_state)
 
-        backButton.setOnClickListener {
+        findViewById<ImageView>(R.id.iv_back).setOnClickListener {
             finish()
         }
+    }
 
+    private fun setupAdapters() {
+        selectedDateAdapter = RecipeAdapter { recipe ->
+            openRecipeDetail(recipe)
+        }
+
+        allFavoritesAdapter = RecipeAdapter { recipe ->
+            openRecipeDetail(recipe)
+        }
+
+        selectedDateRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@FavoritesActivity)
+            adapter = selectedDateAdapter
+        }
+    }
+
+    private fun setupListeners() {
         toggleButton.setOnClickListener {
             toggleView()
         }
 
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val selectedDate = "${dayOfMonth}/${month + 1}/${year}"
-            Toast.makeText(this, "Selected: $selectedDate", Toast.LENGTH_SHORT).show()
-        }
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, dayOfMonth)
+            selectedDate = dateFormat.format(calendar.time)
 
-        loadFavorites()
-        updateView()
+            updateSelectedDateTitle(year, month, dayOfMonth)
+            loadRecipesForSelectedDate()
+        }
     }
 
     private fun toggleView() {
@@ -55,65 +95,84 @@ class FavoritesActivity : AppCompatActivity() {
         if (isCalendarView) {
             // Show calendar view
             calendarView.visibility = View.VISIBLE
-            listContainer.visibility = View.GONE
+            selectedDateRecyclerView.visibility = View.VISIBLE
+            selectedDateTitle.visibility = View.VISIBLE
+            findViewById<View>(R.id.divider).visibility = View.VISIBLE
             emptyStateText.visibility = View.GONE
             toggleButton.setImageResource(R.drawable.ic_list)
             toggleButton.contentDescription = "Switch to list view"
+
+            // Load recipes for the initially selected date
+            loadRecipesForSelectedDate()
         } else {
-            // Show list view
+            // Show all favorites list
             calendarView.visibility = View.GONE
-            if (favorites.isEmpty()) {
-                listContainer.visibility = View.GONE
-                emptyStateText.visibility = View.VISIBLE
-            } else {
-                listContainer.visibility = View.VISIBLE
-                emptyStateText.visibility = View.GONE
-                displayFavorites()
-            }
+            selectedDateTitle.visibility = View.GONE
+            findViewById<View>(R.id.divider).visibility = View.GONE
             toggleButton.setImageResource(R.drawable.ic_calendar)
             toggleButton.contentDescription = "Switch to calendar view"
+
+            loadAllFavorites()
         }
     }
 
-    private fun removeFavorite(favorite: String) {
-        favorites.remove(favorite)
-        saveFavorites()
-        updateView()
-    }
+    private fun loadRecipesForSelectedDate() {
+        val recipes = favoritesDbHelper.getFavoritesByDate(selectedDate)
 
-    private fun displayFavorites() {
-        listContainer.removeAllViews()
-
-        for (favorite in favorites) {
-            val favoriteView = layoutInflater.inflate(R.layout.item_favorite, listContainer, false)
-            val favoriteTitle = favoriteView.findViewById<TextView>(R.id.tv_favorite_title)
-            val favoriteDescription = favoriteView.findViewById<TextView>(R.id.tv_favorite_description)
-            val removeButton = favoriteView.findViewById<ImageView>(R.id.iv_remove_favorite)
-
-            favoriteTitle.text = favorite
-            favoriteDescription.text = "Added to favorites"
-            removeButton.setOnClickListener {
-                removeFavorite(favorite)
-            }
-
-            listContainer.addView(favoriteView)
+        if (recipes.isEmpty()) {
+            selectedDateRecyclerView.visibility = View.GONE
+            emptyStateText.visibility = View.VISIBLE
+            emptyStateText.text = "No favorites saved on this date"
+        } else {
+            selectedDateRecyclerView.visibility = View.VISIBLE
+            emptyStateText.visibility = View.GONE
+            selectedDateAdapter.submitList(recipes)
         }
     }
 
-    private fun loadFavorites() {
-        val sharedPref = getSharedPreferences("favorites_prefs", MODE_PRIVATE)
-        val favoritesString = sharedPref.getString("favorites", "")
-        if (!favoritesString.isNullOrEmpty()) {
-            favorites.clear()
-            favorites.addAll(favoritesString.split(","))
+    private fun loadAllFavorites() {
+        val allFavorites = favoritesDbHelper.getAllFavorites()
+
+        if (allFavorites.isEmpty()) {
+            selectedDateRecyclerView.visibility = View.GONE
+            emptyStateText.visibility = View.VISIBLE
+            emptyStateText.text = "No favorites yet\n\nYour favorite recipes will appear here."
+        } else {
+            selectedDateRecyclerView.visibility = View.VISIBLE
+            emptyStateText.visibility = View.GONE
+            selectedDateRecyclerView.adapter = allFavoritesAdapter
+            allFavoritesAdapter.submitList(allFavorites)
         }
     }
 
-    private fun saveFavorites() {
-        val sharedPref = getSharedPreferences("favorites_prefs", MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putString("favorites", favorites.joinToString(","))
-            apply()
+    private fun updateSelectedDateTitle(year: Int, month: Int, dayOfMonth: Int) {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayOfMonth)
+
+        val dateFormat = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+
+        selectedDateTitle.text = "$formattedDate Favorites"
+    }
+
+    private fun openRecipeDetail(recipe: Recipe) {
+        val intent = Intent(this, RecipeActivity::class.java)
+        intent.putExtra("recipe", recipe)
+        startActivity(intent)
+    }
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(Date())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh the data when returning to this activity
+        if (isCalendarView) {
+            loadRecipesForSelectedDate()
+        } else {
+            loadAllFavorites()
         }
     }
 }
