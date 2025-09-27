@@ -1,10 +1,12 @@
 package com.homeapps.recipeai
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.homeapps.recipeai.models.Recipe
+import java.io.File
 
 class RecipeActivity : AppCompatActivity() {
 
@@ -48,7 +50,17 @@ class RecipeActivity : AppCompatActivity() {
         servings.text = recipe.servings
         difficulty.text = recipe.difficulty
 
-        // Set placeholder image (TODO: Load actual image from URL)
-        recipeImage.setBackgroundResource(R.drawable.cr8beeeeee)
+        // Load captured image if available, otherwise use placeholder
+        if (!recipe.capturedImagePath.isNullOrEmpty() && File(recipe.capturedImagePath).exists()) {
+            val bitmap = BitmapFactory.decodeFile(recipe.capturedImagePath)
+            bitmap?.let {
+                recipeImage.setImageBitmap(it)
+                recipeImage.scaleType = ImageView.ScaleType.CENTER_CROP
+            } ?: run {
+                recipeImage.setBackgroundResource(R.drawable.cr8beeeeee)
+            }
+        } else {
+            recipeImage.setBackgroundResource(R.drawable.cr8beeeeee)
+        }
     }
 }

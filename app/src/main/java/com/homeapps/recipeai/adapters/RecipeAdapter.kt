@@ -1,5 +1,6 @@
 package com.homeapps.recipeai.adapters
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.homeapps.recipeai.R
 import com.homeapps.recipeai.models.Recipe
+import java.io.File
 
 class RecipeAdapter(
     private val onRecipeClick: (Recipe) -> Unit
@@ -44,8 +46,18 @@ class RecipeAdapter(
             servings.text = recipe.servings
             difficulty.text = recipe.difficulty
 
-            // Set placeholder image (TODO: Load actual image from URL)
-            recipeImage.setBackgroundResource(R.drawable.cr8beeeeee)
+            // Load captured image if available, otherwise use placeholder
+            if (!recipe.capturedImagePath.isNullOrEmpty() && File(recipe.capturedImagePath).exists()) {
+                val bitmap = BitmapFactory.decodeFile(recipe.capturedImagePath)
+                bitmap?.let {
+                    recipeImage.setImageBitmap(it)
+                    recipeImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                } ?: run {
+                    recipeImage.setBackgroundResource(R.drawable.cr8beeeeee)
+                }
+            } else {
+                recipeImage.setBackgroundResource(R.drawable.cr8beeeeee)
+            }
 
             itemView.setOnClickListener {
                 onRecipeClick(recipe)

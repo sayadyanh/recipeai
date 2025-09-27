@@ -12,7 +12,8 @@ data class Recipe(
     val imageUrl: String?,
     val cookingTime: String,
     val servings: String,
-    val difficulty: String
+    val difficulty: String,
+    val capturedImagePath: String?
 ) : Parcelable
 
 @Parcelize
